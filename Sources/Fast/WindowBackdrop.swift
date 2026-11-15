@@ -188,8 +188,10 @@ final class WindowBackdropView: NSView {
     /// Kept separate from policy so transitions can be checked deterministically.
     func applyGlass(style requested: WindowGlassStyle, dark: Bool) {
         var style = requested
-        if style.active {
+        if style.usesLiquid {
             if #available(macOS 26.0, *), LiquidGlassMaterial.present {} else { style = .off }
+        } else if style.active {
+            if #available(macOS 26.0, *) {} else { style = .off }
         }
         if style.usesLiquid, #available(macOS 26.0, *), LiquidGlassMaterial.present {
             let material: NSGlassEffectView

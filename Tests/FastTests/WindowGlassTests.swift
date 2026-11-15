@@ -197,7 +197,7 @@ struct WindowGlassTests {
     }
 
     @MainActor @Test func resizeUpdatesTheNativeMaterialFrameAndContour() throws {
-        guard #available(macOS 26.0, *) else { return }
+        guard #available(macOS 26.0, *), LiquidGlass.materialReady else { return }
         _ = NSApplication.shared
         let view = WindowBackdropView(frame: NSRect(x: 0, y: 0, width: 400, height: 300))
         let window = NSWindow(contentRect: view.frame, styleMask: [.borderless], backing: .buffered, defer: false)

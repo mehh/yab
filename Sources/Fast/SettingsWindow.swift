@@ -1567,7 +1567,7 @@ private struct GlassSearch: View {
             .padding(.horizontal, 10)
             .frame(height: Self.height)
             .background {
-                if #available(macOS 26.0, *), !reduceTransparency {
+                if #available(macOS 26.0, *), LiquidGlass.materialReady, !reduceTransparency {
                     Color.clear.glassEffect(.regular, in: .capsule)
                 } else {
                     Capsule().fill(.regularMaterial)
