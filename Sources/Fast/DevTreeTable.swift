@@ -61,7 +61,7 @@ struct DevTreeTable: NSViewRepresentable {
         let table = DevTreeTableView()
         table.controller = context.coordinator
         table.headerView = nil
-        table.style = .plain
+        if table.responds(to: NSSelectorFromString("setStyle:")) { table.style = .plain }
         table.backgroundColor = .clear
         table.selectionHighlightStyle = .none
         table.intercellSpacing = .zero

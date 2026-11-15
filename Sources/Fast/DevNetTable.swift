@@ -238,7 +238,7 @@ struct NetTableView: NSViewRepresentable {
         table.allowsMultipleSelection = false
         table.allowsEmptySelection = true
         table.focusRingType = .none
-        table.style = .plain
+        if table.responds(to: NSSelectorFromString("setStyle:")) { table.style = .plain }
         table.dataSource = context.coordinator
         table.delegate = context.coordinator
         table.target = context.coordinator
