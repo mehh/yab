@@ -47,11 +47,11 @@ final class FloatGlass: NSView {
         contents.autoresizingMask = [.width, .height]
         content = contents
 
-        if #available(macOS 26.0, *) {
+        if #available(macOS 26.0, *), LiquidGlass.materialReady {
             let glass = NSGlassEffectView(frame: area)
             // Clear is the media overlay variant; its caller supplies the
             // dimming behind the glass and bright foreground marks.
-            glass.style = overVideo ? .clear : .regular
+            LiquidGlassMaterial.wear(overVideo ? .clear : .regular, on: glass)
             glass.contentView = contents
             glass.autoresizingMask = [.width, .height]
             material = glass
