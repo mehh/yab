@@ -1,5 +1,19 @@
 import AppKit
 
+/// Native glass style writes: on some macOS 26 seeds the class is present
+/// but instances do not answer `setStyle:` yet.
+enum LiquidGlassMaterial {
+    private static let styleSetter = NSSelectorFromString("setStyle:")
+
+    static var present: Bool { LiquidGlass.materialReady }
+
+    @available(macOS 26.0, *)
+    static func wear(_ style: NSGlassEffectView.Style, on glass: NSGlassEffectView) {
+        guard glass.responds(to: styleSetter) else { return }
+        glass.style = style
+    }
+}
+
 /// A resolved material, separate from the look's own glass step.
 enum WindowGlassStyle: String {
     case off, clear, regular, opaque
@@ -18,10 +32,7 @@ enum WindowGlassPolicy {
     /// Clear glass, kept readable over a white window behind.
     static let darkVeilOpacity: CGFloat = 0.58
 
-    static var supported: Bool {
-        if #available(macOS 26.0, *) { return true }
-        return false
-    }
+    static var supported: Bool { LiquidGlassMaterial.present }
 
     static func resolve(enabled: Bool, dark: Bool, supported: Bool,
                         reduceTransparency: Bool, increaseContrast: Bool) -> WindowGlassStyle {

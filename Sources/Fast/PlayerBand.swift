@@ -177,7 +177,7 @@ enum IslandGlass {
     static let melt: CGFloat = 5
 
     static func container() -> NSView {
-        if #available(macOS 26.0, *) {
+        if #available(macOS 26.0, *), LiquidGlass.materialReady {
             let box = NSGlassEffectContainerView()
             // Near enough to melt: a bud leaving the island keeps a neck
             // until it is this far off.
@@ -194,9 +194,9 @@ enum IslandGlass {
     }
 
     static func drop() -> NSView {
-        if #available(macOS 26.0, *) {
+        if #available(macOS 26.0, *), LiquidGlass.materialReady {
             let glass = IslandDrop()
-            glass.style = .regular
+            LiquidGlassMaterial.wear(.regular, on: glass)
             return glass
         }
         let plate = NSVisualEffectView()

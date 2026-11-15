@@ -5,6 +5,10 @@ import SwiftUI
 
 @Suite(.serialized)
 struct WindowGlassTests {
+    @Test func supportedTracksNativeGlassAvailability() {
+        #expect(WindowGlassPolicy.supported == LiquidGlass.materialReady)
+    }
+
     @Test func disabledOrUnsupportedNeverCreatesAHoleInTheWindow() {
         for dark in [false, true] {
             for reduced in [false, true] {
