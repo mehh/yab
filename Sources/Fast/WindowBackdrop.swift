@@ -189,7 +189,7 @@ final class WindowBackdropView: NSView {
     func applyGlass(style requested: WindowGlassStyle, dark: Bool) {
         var style = requested
         if style.active, !LiquidGlassMaterial.present { style = .off }
-        if style.usesLiquid, LiquidGlassMaterial.present {
+        if style.usesLiquid, #available(macOS 26.0, *), LiquidGlassMaterial.present {
             let material: NSGlassEffectView
             if let existing = liquid as? NSGlassEffectView {
                 material = existing
@@ -200,9 +200,7 @@ final class WindowBackdropView: NSView {
                 addSubview(material, positioned: .above, relativeTo: glass)
                 liquid = material
             }
-            if #available(macOS 26.0, *) {
-                LiquidGlassMaterial.wear(style == .clear ? .clear : .regular, on: material)
-            }
+            LiquidGlassMaterial.wear(style == .clear ? .clear : .regular, on: material)
             material.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
             if veil == nil {
                 let made = NSView(frame: bounds)
