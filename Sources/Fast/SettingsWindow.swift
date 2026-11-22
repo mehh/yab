@@ -1844,7 +1844,7 @@ private struct PageList: NSViewRepresentable {
         }
         table.addTableColumn(NSTableColumn(identifier: .init("page")))
         table.headerView = nil
-        table.style = .sourceList
+        if table.responds(to: NSSelectorFromString("setStyle:")) { table.style = .sourceList }
         table.backgroundColor = .clear
         table.selectionHighlightStyle = .none
         table.allowsEmptySelection = true

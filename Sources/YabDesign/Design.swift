@@ -584,9 +584,18 @@ private struct DropGround: ViewModifier {
 /// Liquid Glass where there is glass and it is wanted: macOS 26 on, and
 /// transparency not reduced. Everything that draws glass asks this.
 public enum LiquidGlass {
-    public static var wanted: Bool {
+    private static let styleSetter = NSSelectorFromString("setStyle:")
+
+    /// Whether AppKit exposes a working `NSGlassEffectView` on this Mac.
+    /// The OS version alone is not enough on early macOS 26 seeds.
+    public static var materialReady: Bool {
         guard #available(macOS 26.0, *) else { return false }
-        return !NSWorkspace.shared.accessibilityDisplayShouldReduceTransparency
+        guard let cls = NSClassFromString("NSGlassEffectView") as? NSObject.Type else { return false }
+        return cls.instancesRespond(to: styleSetter)
+    }
+
+    public static var wanted: Bool {
+        materialReady && !NSWorkspace.shared.accessibilityDisplayShouldReduceTransparency
     }
 }
 
