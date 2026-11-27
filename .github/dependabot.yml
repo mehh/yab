@@ -1,0 +1,66 @@
+# Dependabot: monthly, grouped (one version PR + one security PR per ecosystem).
+# Actions cost (Nov 2026): every Dependabot PR runs this repo's CI, so fewer, grouped PRs.
+version: 2
+updates:
+- package-ecosystem: npm
+  directories:
+  - /Raycast
+  - /scripts/devtools
+  - /sync-server
+  - /videos/launch
+  schedule:
+    interval: monthly
+  open-pull-requests-limit: 2
+  groups:
+    npm-version:
+      applies-to: version-updates
+      patterns:
+      - '*'
+    npm-security:
+      applies-to: security-updates
+      patterns:
+      - '*'
+- package-ecosystem: swift
+  directories:
+  - /
+  - /YabCore/Client
+  schedule:
+    interval: monthly
+  open-pull-requests-limit: 2
+  groups:
+    swift-version:
+      applies-to: version-updates
+      patterns:
+      - '*'
+    swift-security:
+      applies-to: security-updates
+      patterns:
+      - '*'
+- package-ecosystem: gradle
+  directory: /Android
+  schedule:
+    interval: monthly
+  open-pull-requests-limit: 2
+  groups:
+    gradle-version:
+      applies-to: version-updates
+      patterns:
+      - '*'
+    gradle-security:
+      applies-to: security-updates
+      patterns:
+      - '*'
+- package-ecosystem: github-actions
+  directory: /
+  schedule:
+    interval: monthly
+  open-pull-requests-limit: 2
+  groups:
+    github-actions-version:
+      applies-to: version-updates
+      patterns:
+      - '*'
+    github-actions-security:
+      applies-to: security-updates
+      patterns:
+      - '*'

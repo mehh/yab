@@ -133,7 +133,7 @@ jobs:
         with:
           name: swift-test-log
           path: swift-test.log
-          retention-days: 14
+          retention-days: 3
           if-no-files-found: ignore
 
   # The whole suite, advisory. On a clean Mac its swift-testing half stalls
@@ -165,5 +165,5 @@ jobs:
         with:
           name: full-swift-test-log
           path: swift-test.log
-          retention-days: 14
+          retention-days: 3
           if-no-files-found: ignore
